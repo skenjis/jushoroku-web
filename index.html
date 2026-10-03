@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self' https://api.dropboxapi.com https://content.dropboxapi.com">
+  <meta name="theme-color" content="#1d46b3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Jushoroku">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <title>Jushoroku</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 一覧 -->
+  <section id="listPage" class="page">
+    <header class="bar">
+      <input id="q" type="search" placeholder="名前・電話・地名など" autocomplete="off" spellcheck="false" enterkeyhint="search">
+      <button id="settingsBtn" class="icon-btn" aria-label="設定">⚙︎</button>
+    </header>
+    <div id="status" class="status"></div>
+    <ul id="list" class="list"></ul>
+  </section>
+
+  <!-- 詳細 -->
+  <section id="detailPage" class="page" hidden>
+    <header class="bar">
+      <button id="backBtn" class="text-btn">‹ 一覧</button>
+    </header>
+    <div class="detail">
+      <div id="dKana" class="kana"></div>
+      <h1 id="dName"></h1>
+      <div id="dNames" class="names"></div>
+      <div id="dOrg" class="org"></div>
+      <div id="dContacts" class="contacts"></div>
+      <div id="dAddresses"></div>
+      <div id="dLinks" class="links"></div>
+      <details class="raw">
+        <summary>元のテキスト</summary>
+        <pre id="dRaw"></pre>
+      </details>
+    </div>
+  </section>
+
+  <!-- 設定 -->
+  <section id="settingsPage" class="page" hidden>
+    <header class="bar">
+      <button id="settingsBackBtn" class="text-btn">‹ 戻る</button>
+      <span class="bar-title">データの読み込み</span>
+    </header>
+    <div class="settings">
+      <p class="muted">このアプリは見るだけです（書き込みはしません）。最後に読み込んだデータは、この iPhone の中に残るので圏外でも見られます。</p>
+      <div id="current" class="card"></div>
+
+      <h2>Dropbox から自動で読み込む</h2>
+      <p class="muted">開くたびに、Dropbox の addressbook.json を読み直します。</p>
+      <label>アプリキー（入力済み。通常は変えなくてよい）<input id="appKey" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      <label>ファイルの場所<input id="dbxPath" value="/addressbook.json" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      <div class="row">
+        <button id="dbxConnect" class="primary">Dropbox につなぐ</button>
+        <button id="dbxReload">今すぐ読み直す</button>
+        <button id="dbxDisconnect" class="danger">切る</button>
+      </div>
+
+      <h2>ファイルを選んで読み込む</h2>
+      <p class="muted">「ファイル」アプリから addressbook.json を選びます（Dropbox・iCloud Drive のどちらからでも）。更新したいときは選び直します。</p>
+      <label class="file-btn">ファイルを選ぶ<input id="filePick" type="file" accept=".json,application/json"></label>
+
+      <h2>お試し</h2>
+      <button id="useSample">サンプルのデータで試す</button>
+
+      <h2>この iPhone から消す</h2>
+      <button id="clearAll" class="danger">読み込んだデータと設定を消す</button>
+    </div>
+  </section>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="itaiji.js"></script>
+  <script src="core.js"></script>
+  <script src="store-core.js"></script>
+  <script src="zipcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
